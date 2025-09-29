@@ -4,7 +4,7 @@
 
 This project is a **security sandbox platform** that combines **Docker-based isolation** with **Federated Learning (FL)** to detect malware and anomalies in a **privacy-preserving** manner.
 
-* Suspicious files are uploaded via the frontend and executed safely inside **Docker containers**, which capture behavioral logs like system calls, file access, and network activity.
+* Suspicious files are uploaded via the frontend and executed safely inside **Docker containers**, capturing behavioral logs like system calls, file access, and network activity.
 * Each sandbox trains a **local FL model** on its captured data. Instead of sharing raw logs, only model parameters are sent to the server for aggregation, ensuring **data privacy**.
 * The **Flask backend** manages sandbox execution, federated training, and results delivery.
 * The **frontend (HTML, CSS, JS)** lets users upload files and view real-time results.
@@ -52,11 +52,44 @@ I contributed to three main parts of the project:
 
 ---
 
-## 📈 Future Scope
+## 🐳 Sandbox & Docker Setup
 
-* Real-time **network packet analysis** (e.g., Wireshark integration).
-* Lightweight **IoT-compatible sandboxes** for edge devices.
-* **Live alert system** for immediate detection and response.
+### Sandbox Setup
+
+* The sandbox is implemented in the `sandbox/` folder:
+
+  * `sandbox.py` – Executes uploaded files inside the container and collects logs.
+  * `sandbox_setup.py` – Prepares the container environment with required dependencies.
+  * `start.sh` – Starts the sandbox containers for execution.
+  * `test.sh` – Script for testing sandbox execution.
+
+### Docker Setup
+
+1. **Install Docker**:
+   Follow the official [Docker installation guide](https://docs.docker.com/get-docker/).
+
+2. **Build Docker Images**:
+
+   ```bash
+   cd sandbox
+   docker build -t fl-sandbox .
+   ```
+
+3. **Run Sandbox Container**:
+
+   ```bash
+   docker run -it --rm -v $(pwd)/uploads:/uploads fl-sandbox
+   ```
+
+4. **Backend Docker (optional)**:
+
+   ```bash
+   cd backend
+   docker build -t fl-backend .
+   docker run -p 5000:5000 fl-backend
+   ```
+
+This ensures both **sandbox execution** and **backend APIs** run in isolated environments.
 
 ---
 
@@ -68,17 +101,22 @@ I contributed to three main parts of the project:
    git clone https://github.com/your-username/security-sandbox-fl.git
    cd security-sandbox-fl
    ```
+
 2. Start Docker service.
-3. Install dependencies:
+
+3. Install Python dependencies:
 
    ```bash
-   pip install -r requirements.txt
+   pip install -r backend/requirements.txt
    ```
+
 4. Run Flask backend:
 
    ```bash
+   cd backend
    python app.py
    ```
+
 5. Open frontend in browser and upload a file for analysis.
 
 ---
@@ -88,69 +126,56 @@ I contributed to three main parts of the project:
 ```
 security-sandbox-fl/
 │── docker-compose.yml
-│── cd
-│── desktop.ini
 │
-├── backend/                        # Flask + Federated Learning backend
-│   │── app.py                      # Main Flask application entry point
-│   │── client.py                   # FL client logic
-│   │── server.py                   # FL server logic
-│   │── federated_training.py       # Federated learning model training
-│   │── data_preprocessing.py       # Data preprocessing pipeline
-│   │── display_results.py          # Result visualization logic
-│   │── requirements.txt            # Python dependencies
-│   │── global_model.pth            # Saved global ML model
-│   │── app.db / database.db        # SQLite database(s)
-│   │── sandbox.db                  # Sandbox logs storage
-│   │── results_log.txt             # Execution logs
-│   │── Dockerfile                  # Backend Docker build file
+├── backend/                        
+│   │── app.py                      
+│   │── client.py                   
+│   │── server.py                   
+│   │── federated_training.py       
+│   │── data_preprocessing.py       
+│   │── display_results.py          
+│   │── requirements.txt            
+│   │── global_model.pth            
+│   │── app.db / database.db        
+│   │── sandbox.db                  
+│   │── results_log.txt             
+│   │── Dockerfile                  
 │   │
-│   ├── routes/                     # Flask routes (API endpoints)
+│   ├── routes/                     
 │   │   │── model.py
 │   │   │── result.py
 │   │   │── upload.py
 │   │
-│   ├── static/                     # Frontend static assets (served by Flask)
+│   ├── static/                     
 │   │   ├── css/
-│   │   │   ├── bootstrap.min.css
-│   │   │   └── style.css
 │   │   ├── images/
-│   │   │   ├── 1.jpg, 2.jpg, bg1.jpg, login1.jpg, theam.jpg …
 │   │   └── js/
-│   │       ├── api.js
-│   │       ├── bootstrap.bundle.min.js
-│   │       └── main.js
 │   │
-│   ├── templates/                  # HTML templates (Flask Jinja2)
+│   ├── templates/                  
 │   │   ├── index.html
 │   │   ├── home.html
 │   │   ├── upload.html
-│   │   ├── results.html
-│   │   └── Dockerfile              # (Possibly misplaced)
+│   │   └── results.html
 │   │
-│   ├── upload folder file/         # Sample malware datasets
-│   │   ├── fake_malware_dataset.csv
-│   │   └── trigger_malware_dataset.csv
-│   │
-│   └── uploads/                    # Uploaded & processed files
-│       ├── anomaly_data.txt
-│       ├── network_traffic.txt
-│       ├── pattern_data.txt
-│       ├── federated_data.pkl
-│       ├── results_log.txt
-│       └── test.txt …
+│   ├── upload folder file/         
+│   └── uploads/                    
 │
-├── frontend/                       # React/Vue/JS frontend (UI)
-│   │── package.json                # Frontend dependencies
-│   ├── .vscode/                    # Editor settings
-│   │   └── settings.json
-│   ├── public/                     # Public static files
-│   └── src/                        # Source code (currently empty)
+├── frontend/                       
 │
-└── sandbox/                        # Docker-based sandbox execution
-    │── sandbox.py                  # Sandbox execution script
-    │── sandbox_setup.py            # Setup for containerized environment
-    │── start.sh                    # Start script for sandbox
-    │── test.sh                     # Testing script
-    └── Dockerfile                  # Sandbox Docker build file
+└── sandbox/                        
+    │── sandbox.py                  
+    │── sandbox_setup.py            
+    │── start.sh                    
+    │── test.sh                     
+    └── Dockerfile                  
+```
+
+---
+
+## 📈 Future Scope
+
+* Real-time **network packet analysis** (e.g., Wireshark integration).
+* Lightweight **IoT-compatible sandboxes** for edge devices.
+* **Live alert system** for immediate detection and response.
+
 
