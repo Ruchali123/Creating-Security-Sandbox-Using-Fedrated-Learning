@@ -86,15 +86,71 @@ I contributed to three main parts of the project:
 ## 📂 Project Structure
 
 ```
-├── app.py              # Flask backend  
-├── docker/             # Docker sandbox configs  
-├── federated/          # FL model training code  
-├── static/             # Frontend assets (CSS, JS)  
-├── templates/          # Frontend HTML pages  
-├── database/           # SQLite/MySQL schema and logs  
-└── README.md
-```
+security-sandbox-fl/
+│── docker-compose.yml
+│── cd
+│── desktop.ini
+│
+├── backend/                        # Flask + Federated Learning backend
+│   │── app.py                      # Main Flask application entry point
+│   │── client.py                   # FL client logic
+│   │── server.py                   # FL server logic
+│   │── federated_training.py       # Federated learning model training
+│   │── data_preprocessing.py       # Data preprocessing pipeline
+│   │── display_results.py          # Result visualization logic
+│   │── requirements.txt            # Python dependencies
+│   │── global_model.pth            # Saved global ML model
+│   │── app.db / database.db        # SQLite database(s)
+│   │── sandbox.db                  # Sandbox logs storage
+│   │── results_log.txt             # Execution logs
+│   │── Dockerfile                  # Backend Docker build file
+│   │
+│   ├── routes/                     # Flask routes (API endpoints)
+│   │   │── model.py
+│   │   │── result.py
+│   │   │── upload.py
+│   │
+│   ├── static/                     # Frontend static assets (served by Flask)
+│   │   ├── css/
+│   │   │   ├── bootstrap.min.css
+│   │   │   └── style.css
+│   │   ├── images/
+│   │   │   ├── 1.jpg, 2.jpg, bg1.jpg, login1.jpg, theam.jpg …
+│   │   └── js/
+│   │       ├── api.js
+│   │       ├── bootstrap.bundle.min.js
+│   │       └── main.js
+│   │
+│   ├── templates/                  # HTML templates (Flask Jinja2)
+│   │   ├── index.html
+│   │   ├── home.html
+│   │   ├── upload.html
+│   │   ├── results.html
+│   │   └── Dockerfile              # (Possibly misplaced)
+│   │
+│   ├── upload folder file/         # Sample malware datasets
+│   │   ├── fake_malware_dataset.csv
+│   │   └── trigger_malware_dataset.csv
+│   │
+│   └── uploads/                    # Uploaded & processed files
+│       ├── anomaly_data.txt
+│       ├── network_traffic.txt
+│       ├── pattern_data.txt
+│       ├── federated_data.pkl
+│       ├── results_log.txt
+│       └── test.txt …
+│
+├── frontend/                       # React/Vue/JS frontend (UI)
+│   │── package.json                # Frontend dependencies
+│   ├── .vscode/                    # Editor settings
+│   │   └── settings.json
+│   ├── public/                     # Public static files
+│   └── src/                        # Source code (currently empty)
+│
+└── sandbox/                        # Docker-based sandbox execution
+    │── sandbox.py                  # Sandbox execution script
+    │── sandbox_setup.py            # Setup for containerized environment
+    │── start.sh                    # Start script for sandbox
+    │── test.sh                     # Testing script
+    └── Dockerfile                  # Sandbox Docker build file
 
----
-
-Would you like me to also **add GitHub-friendly visuals** (like badges for Docker, Flask, Python, etc. and an architecture diagram in markdown) to make the README stand out more?
