@@ -1,36 +1,100 @@
-# Creating-Security-Sandbox-Using-Fedrated-Learning
+# Enhancing Digital Defence Using Federated Learning Security Sandbox
 
-It’s a
-security platform that allows users to upload potentially harmful files, which are then executed inside
-isolated Docker containers to safely analyze their behavior. We use Federated Learning to train
-machine learning models across these sandboxes—without sharing raw data—so we protect privacy
-while continuously improving threat detection. The frontend lets users upload files and see analysis
-results, while Flask handles backend logic and model training.
+## 📌 Overview
 
-What I build:
-Docker Sandbox:
-Each uploaded file is run inside a Docker container, which captures behavior like system calls,
-file access, and network activity—without harming the host.
-• Federated Learning Model:
-Instead of sharing raw logs, each sandbox trains a local model. Only the trained parameters
-are shared and aggregated to build a smarter global model. This preserves user privacy.
-• Frontend UI:
-Built with HTML, CSS, and JS. Users can upload files and view logs, results, and detection
-insights.
-• Backend with Flask:
-Flask handles file uploads, container execution, federated training, and data retrieval.
-• Database (SQLite/MySQL):
-Stores sandbox results, model metrics, user activity, and logs.
+This project is a **security sandbox platform** that combines **Docker-based isolation** with **Federated Learning (FL)** to detect malware and anomalies in a **privacy-preserving** manner.
 
-Flow:
-1. User uploads a file.
-2. File is executed in a Docker sandbox.
-3. Logs are generated and analyzed.
-4. The model is locally trained on that behavior.
-5. Only model weights are sent to the server for aggregation.
-6. Results and alerts are shown on the UI.
+* Suspicious files are uploaded via the frontend and executed safely inside **Docker containers**, which capture behavioral logs like system calls, file access, and network activity.
+* Each sandbox trains a **local FL model** on its captured data. Instead of sharing raw logs, only model parameters are sent to the server for aggregation, ensuring **data privacy**.
+* The **Flask backend** manages sandbox execution, federated training, and results delivery.
+* The **frontend (HTML, CSS, JS)** lets users upload files and view real-time results.
 
-Unique Aspects:
-• Combines isolation (sandboxing) with collaborative learning (federated models).
-• Protects privacy: No sensitive data ever leaves the sandbox.
-• Signature-free detection: Focuses on pattern-based anomaly detection.
+---
+
+## 🚀 Features
+
+* **Docker Sandbox Isolation**: Safely executes potentially harmful files without risking the host system.
+* **Federated Learning**: Collaborative anomaly detection model training without sharing sensitive data.
+* **Privacy-Preserving Security**: Only model weights are shared, not raw logs.
+* **Full-Stack Integration**: Frontend UI connected with Flask backend through REST APIs.
+* **Database Support**: SQLite/MySQL stores logs, results, and training metadata.
+
+---
+
+## 🔄 Workflow
+
+1. User uploads a suspicious file via the UI.
+2. Flask backend executes the file inside a Docker sandbox.
+3. Logs (system calls, file activity, network traces) are collected.
+4. Local FL model trains on these logs.
+5. Only model weights are aggregated into a global model.
+6. Results and anomaly detection insights are displayed on the UI.
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend**: HTML, CSS, JavaScript
+* **Backend**: Python (Flask)
+* **Containerization**: Docker
+* **Machine Learning**: Federated Learning (Logistic Regression)
+* **Database**: SQLite / MySQL
+
+---
+
+## 👩‍💻 My Role
+
+I contributed to three main parts of the project:
+
+1. **Docker Sandbox Setup**: Configured isolated containers, captured system logs, and ensured secure execution of files.
+2. **Federated Learning Training**: Implemented local model training and parameter aggregation for anomaly detection.
+3. **Frontend-Backend Integration**: Connected the UI with Flask APIs for file uploads, real-time results, and smooth interaction.
+
+---
+
+## 📈 Future Scope
+
+* Real-time **network packet analysis** (e.g., Wireshark integration).
+* Lightweight **IoT-compatible sandboxes** for edge devices.
+* **Live alert system** for immediate detection and response.
+
+---
+
+## ▶️ How to Run
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/security-sandbox-fl.git
+   cd security-sandbox-fl
+   ```
+2. Start Docker service.
+3. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Run Flask backend:
+
+   ```bash
+   python app.py
+   ```
+5. Open frontend in browser and upload a file for analysis.
+
+---
+
+## 📂 Project Structure
+
+```
+├── app.py              # Flask backend  
+├── docker/             # Docker sandbox configs  
+├── federated/          # FL model training code  
+├── static/             # Frontend assets (CSS, JS)  
+├── templates/          # Frontend HTML pages  
+├── database/           # SQLite/MySQL schema and logs  
+└── README.md
+```
+
+---
+
+Would you like me to also **add GitHub-friendly visuals** (like badges for Docker, Flask, Python, etc. and an architecture diagram in markdown) to make the README stand out more?
